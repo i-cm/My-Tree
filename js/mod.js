@@ -1,11 +1,11 @@
 let modInfo = {
-	name: "The Modding Tree",
-	id: "mymod",
+	name: "My Tree",
+	id: "tbd5921",
 	author: "",
 	pointsName: "points",
 	discordName: "",
 	discordLink: "",
-	initialStartPoints: new ExpantaNum (10), // Used for hard resets and new players
+	initialStartPoints: new ExpantaNum (0), // Used for hard resets and new players
 	
 	offlineLimit: 1,  // In hours
 }
@@ -21,7 +21,7 @@ let changelog = `<h1>Changelog:</h1><br>
 		- Added things.<br>
 		- Added stuff.`
 
-let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
+let winText = ``
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
@@ -42,7 +42,24 @@ function getPointGen() {
 		return new ExpantaNum(0)
 
 	let gain = new ExpantaNum(1)
+  if (hasUpgrade("p", 11)) gain = gain.mul(2)
+  if (hasUpgrade("p", 12)) gain = gain.mul(upgradeEffect("p", 12))
+  if (hasUpgrade("p", 13)) gain = gain.mul(upgradeEffect("p", 13))
+  gain = gain.mul(chargeEffect())
 	return gain
+}
+
+function getChargeGen() {
+	if(!hasMilestone("e", 0))
+		return new ExpantaNum(0)
+	let gain = new ExpantaNum(1)
+	if (hasUpgrade("e", 11)) gain = gain.mul(10)
+	if (hasUpgrade("e", 12)) gain = gain.mul(upgradeEffect("p", 13))
+	if (hasUpgrade("e", 13)) gain = gain.mul(upgradeEffect("p", 12))
+	gain = gain.mul(new ExpantaNum(2).pow(getBuyableAmount("e", 11)))
+	if (hasUpgrade("v", 12)) gain = gain.mul(10)
+	if (hasUpgrade("v", 13)) gain = gain.mul(100)
+  return gain
 }
 
 // You can add non-layer related variables that should to into "player" and be saved here, along with default values
