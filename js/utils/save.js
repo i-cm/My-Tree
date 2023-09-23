@@ -1,7 +1,5 @@
 // ************ Save stuff ************
 function save() {
-	NaNcheck(player)
-	if (NaNalert) return
 	localStorage.setItem(modInfo.id, btoa(unescape(encodeURIComponent(JSON.stringify(player)))));
 	localStorage.setItem(modInfo.id+"_options", btoa(unescape(encodeURIComponent(JSON.stringify(options)))));
   //ok it saved fine so the problem must be when loading
@@ -241,19 +239,10 @@ function NaNcheck(data) {
 			NaNcheck(data[item]);
 		}
 		
-		else if (data[item] !== data[item] || checkDecimalNaN(data[item])) {
-			if (!NaNalert) {
-				confirm("Invalid value found in player, named '" + item + "'. Please let the creator of this mod know! You can refresh the page, and you will be un-NaNed.")
-				clearInterval(interval);
-				NaNalert = true;
-				return
-			}
-		}
+		
 		else if (data[item] instanceof ExpantaNum) { // Convert to ExpantaNum
 		}
-		else if ((!!data[item]) && (data[item].constructor === Object)) {
-			NaNcheck(data[item]);
-		}
+		
 	}
 }
 function exportSave() {
