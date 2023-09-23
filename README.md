@@ -1,4 +1,4 @@
-yh# My Tree
+# My Tree
 
 An incremental game based on The Prestige Tree.
 
